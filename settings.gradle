@@ -1,0 +1,6 @@
+rootProject.name = 'json-parser'
+
+include 'json-parser-core'
+include 'json-parser-adapter'
+
+

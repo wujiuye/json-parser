@@ -2,6 +2,9 @@
 * auth: wujiuye 2021/06/08
 * 从2.x版本开始，hotkit-json更名为json-parser，并从hotkit项目中独立出来成为独立维护的项目。
 
+[![Maven central](https://maven-badges.herokuapp.com/maven-central/com.github.wujiuye/json-parser-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.wujiuye/json-parser-core)
+[![License](http://img.shields.io/:license-apache-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+
 ## 模块说明
 
 ### json-parser-core

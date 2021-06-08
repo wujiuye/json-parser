@@ -1,6 +1,7 @@
 # json-parser
 * auth: wujiuye 2021/06/08
 * 从2.x版本开始，hotkit-json更名为json-parser，并从hotkit项目中独立出来成为独立维护的项目。
+* 建议使用最新版本：[json-parser-core](https://maven-badges.herokuapp.com/maven-central/com.github.wujiuye/json-parser-core)
 
 [![Maven central](https://maven-badges.herokuapp.com/maven-central/com.github.wujiuye/json-parser-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.wujiuye/json-parser-core)
 [![License](http://img.shields.io/:license-apache-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
@@ -38,9 +39,12 @@ json-parser-core目前已适配jackson、gson，json-parser-core根据项目中�
 </dependency>
 ```
 ### 支持的API
+目前支持的API见JsonParser接口。可扩展，欢迎提交合并请求。
 ```java
 public interface JsonParser {
+    // ======== 序列化 ==============
     <T> String toJsonString(T obj);
+    // ======== 反序列化 ============
     <T> T fromJson(String jsonStr, Class<T> tClass);
     <T> T fromJson(InputStream jsonIn, Class<T> tClass);
     <T> T fromJson(String jsonStr, Type type);
@@ -68,17 +72,17 @@ public class SerializeConfig {
      */
     private int timezone = 8;
     /**
-     * Date类型序列化格式
+     * Date类型序列化格式，配置为null则序列化为时间戳（反序列化时也会自动适配时间戳）
      */
-    private String dateFormat;
+    private String dateFormat = "yyyy-MM-dd HH:mm:ss";
     /**
-     * LocalDateTime类型序列化格式
+     * LocalDateTime类型序列化格式，配置为null则序列化为时间戳（反序列化时也会自动适配时间戳）
      */
-    private String localDateTimeFormat;
+    private String localDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
     /**
-     * LocalDate类型序列化格式
+     * LocalDate类型序列化格式，配置为null则序列化为时间戳（反序列化时也会自动适配时间戳）
      */
-    private String localDateFormat;
+    private String localDateFormat = "yyyy-MM-dd";
 }
 ```
 修改配置：
@@ -115,10 +119,16 @@ class Main{
 ```yaml
 spring:
   json-parser:
+    # 是否序列化null值，默认false
     serialize-null: false
+    # Date类型序列化格式，默认：yyyy-MM-dd HH:mm:ss (如果配置为null，则会序列化为时间戳，反序列化则自动适配)
     date-format: yyyy-MM-dd HH:mm:ss
+    # LocalDateTime类型序列化格式，默认：yyyy-MM-dd (如果配置为null，则会序列化为时间戳，反序列化则自动适配)
     local-date-format: yyyy-MM-dd
+    # LocalDate类型序列化格式，默认：yyyy-MM-dd HH:mm:ss (如果配置为null，则会序列化为时间戳，反序列化则自动适配)
     local-date-time-format: yyyy-MM-dd HH:mm:ss
+    # 时区（适配时间戳序列化&反序列化），默认为东8区
     timezone: 8
+    # 是否开启xss过滤器，默认开启
     open-xss-filter: true
 ```

@@ -20,17 +20,17 @@ public class SerializeConfig {
      */
     private int timezone = 8;
     /**
-     * Date类型序列化格式
+     * Date类型序列化格式，配置为null则序列化为时间戳（反序列化时也会自动适配时间戳）
      */
-    private String dateFormat;
+    private String dateFormat = "yyyy-MM-dd HH:mm:ss";
     /**
-     * LocalDateTime类型序列化格式
+     * LocalDateTime类型序列化格式，配置为null则序列化为时间戳（反序列化时也会自动适配时间戳）
      */
-    private String localDateTimeFormat;
+    private String localDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
     /**
-     * LocalDate类型序列化格式
+     * LocalDate类型序列化格式，配置为null则序列化为时间戳（反序列化时也会自动适配时间戳）
      */
-    private String localDateFormat;
+    private String localDateFormat = "yyyy-MM-dd";
 
     public boolean isSerializeNulls() {
         return serializeNulls;

@@ -70,22 +70,22 @@ public class JsonUtils {
         if (StringUtils.isNullOrEmpty(jsonStr)) {
             return null;
         }
-        return getJsonParser().fromJsonArray(jsonStr, typeReference);
+        return getJsonParser().fromJson(jsonStr, typeReference.getType());
     }
 
     public static <T> List<T> fromJsonArray(InputStream jsonIn, TypeReference<List<T>> typeReference) {
-        return getJsonParser().fromJsonArray(jsonIn, typeReference);
+        return getJsonParser().fromJson(jsonIn, typeReference.getType());
     }
 
     public static <K, V> Map<K, V> fromJsonMap(String jsonStr, TypeReference<Map<K, V>> typeReference) {
         if (StringUtils.isNullOrEmpty(jsonStr)) {
             return null;
         }
-        return getJsonParser().fromJsonMap(jsonStr, typeReference);
+        return getJsonParser().fromJson(jsonStr, typeReference.getType());
     }
 
     public static <K, V> Map<K, V> fromJsonMap(InputStream jsonIn, TypeReference<Map<K, V>> typeReference) {
-        return getJsonParser().fromJsonMap(jsonIn, typeReference);
+        return getJsonParser().fromJson(jsonIn, typeReference.getType());
     }
 
 }

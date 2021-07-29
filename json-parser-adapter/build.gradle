@@ -7,7 +7,7 @@ plugins {
 }
 
 group = 'com.github.wujiuye'
-version = '2.0.0.RELEASE'
+version = '2.0.2.RELEASE'
 
 dependencies {
     compile("${group}:json-parser-core:${version}")
@@ -45,9 +45,9 @@ publishing {
             artifact javadocJar
 
             pom {
-                name = "hotkit-json-adapter"
-                description = "hotkit-json-adapter是hotkit-json适配springboot的starter包，自动将webmvc或webflux的json解析工作交给hotkit-json完成，以此让整个项目使用同一套json解析配置。"
-                url = "https://github.com/wujiuye/hotkits"
+                name = "json-parser-adapter"
+                description = "json-parser-adapter是json-parser适配springboot的starter包，自动将webmvc或webflux的json解析工作交给json-parser完成，以此让整个项目使用同一套json解析配置。"
+                url = "https://github.com/wujiuye/json-parser"
                 licenses {
                     license {
                         name = "The Apache License, Version 2.0"
@@ -62,9 +62,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection = "scm:git:https://github.com/wujiuye/hotkits.git"
-                    developerConnection = "scm:git:https://github.com/wujiuye/hotkits.git"
-                    url = "https://github.com/wujiuye/hotkits"
+                    connection = "scm:git:https://github.com/wujiuye/json-parser.git"
+                    developerConnection = "scm:git:https://github.com/wujiuye/json-parser.git"
+                    url = "https://github.com/wujiuye/json-parser"
                 }
             }
         }

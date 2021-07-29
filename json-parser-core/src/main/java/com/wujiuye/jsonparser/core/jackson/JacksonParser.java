@@ -5,13 +5,10 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.wujiuye.jsonparser.core.JsonParser;
-import com.wujiuye.jsonparser.core.TypeReference;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Map;
 
 /**
  * jackson
@@ -74,62 +71,6 @@ public class JacksonParser implements JsonParser {
             TypeFactory typeFactory = this.objectMapper.getTypeFactory();
             JavaType javaType = typeFactory.constructType(type);
             return this.objectMapper.readValue(jsonIn, javaType);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public <T> List<T> fromJsonArray(String jsonStr, TypeReference<List<T>> typeReference) {
-        try {
-            return this.objectMapper.readValue(jsonStr, new com.fasterxml.jackson.core.type.TypeReference<List<T>>() {
-                @Override
-                public Type getType() {
-                    return typeReference.getType();
-                }
-            });
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public <T> List<T> fromJsonArray(InputStream jsonIn, TypeReference<List<T>> typeReference) {
-        try {
-            return this.objectMapper.readValue(jsonIn, new com.fasterxml.jackson.core.type.TypeReference<List<T>>() {
-                @Override
-                public Type getType() {
-                    return typeReference.getType();
-                }
-            });
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public <K, V> Map<K, V> fromJsonMap(String jsonStr, TypeReference<Map<K, V>> typeReference) {
-        try {
-            return this.objectMapper.readValue(jsonStr, new com.fasterxml.jackson.core.type.TypeReference<Map<K, V>>() {
-                @Override
-                public Type getType() {
-                    return typeReference.getType();
-                }
-            });
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    public <K, V> Map<K, V> fromJsonMap(InputStream jsonIn, TypeReference<Map<K, V>> typeReference) {
-        try {
-            return this.objectMapper.readValue(jsonIn, new com.fasterxml.jackson.core.type.TypeReference<Map<K, V>>() {
-                @Override
-                public Type getType() {
-                    return typeReference.getType();
-                }
-            });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

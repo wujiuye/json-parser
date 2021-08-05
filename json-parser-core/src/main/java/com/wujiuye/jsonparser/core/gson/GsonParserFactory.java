@@ -4,8 +4,6 @@ import com.google.gson.GsonBuilder;
 import com.wujiuye.jsonparser.core.AbstractJsonParserFactory;
 import com.wujiuye.jsonparser.core.SerializeConfig;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -21,12 +19,8 @@ public class GsonParserFactory extends AbstractJsonParserFactory<GsonParser> {
     protected GsonParser newJsonParser(SerializeConfig config) {
         GsonBuilder gsonBuilder = new GsonBuilder()
                 .registerTypeAdapter(Date.class, new DateTypeAdapter(null))
-                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter(config.getTimezone(),
-                        config.getLocalDateTimeFormat()))
-                .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter(config.getTimezone(),
-                        config.getLocalDateFormat()))
                 .registerTypeAdapter(Double.class, new DoubleTypeAdapter())
-                .registerTypeAdapter(String.class, new StringTypeAdapter(config.isOpenXssFilter()))
+                .registerTypeAdapter(String.class, new StringTypeAdapter())
                 .addDeserializationExclusionStrategy(new GsonExclusionStrategy());
         if (config.isSerializeNulls()) {
             gsonBuilder.serializeNulls();

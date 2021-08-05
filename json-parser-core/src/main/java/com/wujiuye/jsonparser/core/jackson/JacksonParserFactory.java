@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.wujiuye.jsonparser.core.AbstractJsonParserFactory;
 import com.wujiuye.jsonparser.core.SerializeConfig;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -41,19 +39,13 @@ public class JacksonParserFactory extends AbstractJsonParserFactory<JacksonParse
         }
         SimpleModule timeModule = new SimpleModule();
         // 序列化配置
-        timeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(config.getTimezone(),
-                config.getLocalDateTimeFormat()));
-        timeModule.addSerializer(LocalDate.class, new LocalDateSerializer(config.getTimezone(),
-                config.getLocalDateFormat()));
         timeModule.addSerializer(Date.class, new DateSerializer(config.getDateFormat()));
         timeModule.addSerializer(Double.class, new DoubleSerializer());
         timeModule.addSerializer(String.class, new StringSerializer());
         // 反序列化配置
-        timeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(config.getTimezone()));
-        timeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(config.getTimezone()));
         timeModule.addDeserializer(Date.class, new DateDeserializer());
         timeModule.addDeserializer(Double.class, new DoubleDeserializer());
-        timeModule.addDeserializer(String.class, new StringDeserializer(config.isOpenXssFilter()));
+        timeModule.addDeserializer(String.class, new StringDeserializer());
         objectMapper.registerModule(timeModule);
         return objectMapper;
     }

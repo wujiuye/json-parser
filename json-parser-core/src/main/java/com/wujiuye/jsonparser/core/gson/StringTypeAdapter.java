@@ -3,7 +3,6 @@ package com.wujiuye.jsonparser.core.gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.wujiuye.jsonparser.core.util.XssFilterUtils;
 
 import java.io.IOException;
 
@@ -14,10 +13,7 @@ import java.io.IOException;
  */
 public class StringTypeAdapter extends TypeAdapter<String> {
 
-    private boolean openXssFilter;
-
-    public StringTypeAdapter(boolean openXssFilter) {
-        this.openXssFilter = openXssFilter;
+    public StringTypeAdapter() {
     }
 
     @Override
@@ -29,11 +25,7 @@ public class StringTypeAdapter extends TypeAdapter<String> {
 
     @Override
     public String read(JsonReader in) throws IOException {
-        String value = in.nextString();
-        if (!openXssFilter) {
-            return value;
-        }
-        return XssFilterUtils.xssFilter(value);
+        return in.nextString();
     }
 
 }

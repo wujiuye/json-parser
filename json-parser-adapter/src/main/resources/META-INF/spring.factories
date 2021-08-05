@@ -1,4 +1,0 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.wujiuye.jsonparser.adapter.webflux.WebFluxJsonConverterConfiguration,\
-com.wujiuye.jsonparser.adapter.webmvc.WebMvcJsonConverterConfiguration,\
-com.wujiuye.jsonparser.adapter.JsonParserSerializeConfiguration

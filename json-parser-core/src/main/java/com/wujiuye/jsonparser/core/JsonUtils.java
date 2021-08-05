@@ -17,10 +17,10 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class JsonUtils {
 
-    private static AtomicReference<AbstractJsonParserFactory<? extends JsonParser>> chooseJsonParserFactory
+    private static AtomicReference<AbstractJsonParserFactory> chooseJsonParserFactory
             = new AtomicReference<>(newJsonParserFactory(new SerializeConfig()));
 
-    private static AbstractJsonParserFactory<? extends JsonParser> newJsonParserFactory(SerializeConfig config) {
+    private static AbstractJsonParserFactory newJsonParserFactory(SerializeConfig config) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         try {
             classLoader.loadClass("com.google.gson.Gson");

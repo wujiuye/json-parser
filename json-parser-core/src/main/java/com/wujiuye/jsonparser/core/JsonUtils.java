@@ -23,12 +23,12 @@ public class JsonUtils {
     private static AbstractJsonParserFactory newJsonParserFactory(SerializeConfig config) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         try {
-            classLoader.loadClass("com.google.gson.Gson");
-            return new GsonParserFactory(config);
+            classLoader.loadClass("com.fasterxml.jackson.databind.ObjectMapper");
+            return new JacksonParserFactory(config);
         } catch (ClassNotFoundException e) {
             try {
-                classLoader.loadClass("com.fasterxml.jackson.databind.ObjectMapper");
-                return new JacksonParserFactory(config);
+                classLoader.loadClass("com.google.gson.Gson");
+                return new GsonParserFactory(config);
             } catch (ClassNotFoundException ex) {
                 throw new RuntimeException("未找到任何json包，请先在当前项目的依赖配置文件中加入 gson或fackson");
             }

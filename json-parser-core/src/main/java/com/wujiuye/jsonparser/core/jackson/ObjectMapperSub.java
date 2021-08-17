@@ -23,9 +23,9 @@ public class ObjectMapperSub extends ObjectMapper {
             Set<Class<?>> newSet = new HashSet<>();
             newSet.add(cla);
             strategys = newSet;
-            this.setFilterProvider(strategy);
+            this.setFilters(strategy);
             // 将@JsonFilter 作用于 java 对象上
-            this.addMixIn(cla, JacksonExclusionStrategy.MyFilter.class);
+            this.addMixInAnnotations(cla, JacksonExclusionStrategy.MyFilter.class);
         }
     }
 

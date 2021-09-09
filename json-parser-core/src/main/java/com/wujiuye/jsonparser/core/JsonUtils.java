@@ -1,6 +1,7 @@
 package com.wujiuye.jsonparser.core;
 
 import com.wujiuye.jsonparser.core.gson.GsonParserFactory;
+import com.wujiuye.jsonparser.core.gson1x.Gson1xParserFactory;
 import com.wujiuye.jsonparser.core.jackson.JacksonParserFactory;
 import com.wujiuye.jsonparser.core.util.StringUtils;
 
@@ -22,17 +23,17 @@ public class JsonUtils {
 
     private static AbstractJsonParserFactory newJsonParserFactory(SerializeConfig config) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        try {
-            classLoader.loadClass("com.fasterxml.jackson.databind.ObjectMapper");
+        if (CheckerUtils.isUseJackson(classLoader)) {
             return new JacksonParserFactory(config);
-        } catch (ClassNotFoundException e) {
-            try {
-                classLoader.loadClass("com.google.gson.Gson");
+        }
+        if (CheckerUtils.isUseGson(classLoader)) {
+            if (CheckerUtils.getGsonVersion(classLoader) == 2) {
                 return new GsonParserFactory(config);
-            } catch (ClassNotFoundException ex) {
-                throw new RuntimeException("未找到任何json包，请先在当前项目的依赖配置文件中加入 gson或fackson");
+            } else {
+                return new Gson1xParserFactory(config);
             }
         }
+        throw new RuntimeException("未找到任何json包，请先在当前项目的依赖配置文件中加入 gson或fackson");
     }
 
     public static synchronized void resetSerializeConfig(SerializeConfig config) {

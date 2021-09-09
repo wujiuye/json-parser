@@ -1,4 +1,4 @@
-package com.wujiuye.jsonparser.core.gson;
+package com.wujiuye.jsonparser.core.gson1x;
 
 import com.google.gson.Gson;
 import com.wujiuye.jsonparser.core.JsonParser;
@@ -8,15 +8,15 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 
 /**
- * gson
+ * gson 1.x版本适配
  *
  * @author wujiuye 2020/04/26
  */
-public class GsonParser implements JsonParser {
+public class Gson1xParser implements JsonParser {
 
     private final Gson gson;
 
-    public GsonParser(Gson gson) {
+    public Gson1xParser(Gson gson) {
         this.gson = gson;
     }
 

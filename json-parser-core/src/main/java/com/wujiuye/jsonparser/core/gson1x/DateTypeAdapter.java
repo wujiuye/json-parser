@@ -1,24 +1,17 @@
-package com.wujiuye.jsonparser.core.gson;
+package com.wujiuye.jsonparser.core.gson1x;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
+import com.google.gson.*;
 import com.wujiuye.jsonparser.core.util.DateFormatException;
 import com.wujiuye.jsonparser.core.util.DateFormatUtils;
 import com.wujiuye.jsonparser.core.util.DateUtils;
 import com.wujiuye.jsonparser.core.util.StringUtils;
 
-import java.io.IOException;
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * 自定义日期类型的转换，解决web端时间字段使用时间戳也使用字符串的问题
- *
- * @author wujiuye 2020/05/07
- */
-public class DateTypeAdapter extends TypeAdapter<Date> {
+public class DateTypeAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
 
     private final String serializerDatePattern;
 
@@ -27,22 +20,19 @@ public class DateTypeAdapter extends TypeAdapter<Date> {
     }
 
     @Override
-    public void write(JsonWriter jsonWriter, Date date) throws IOException {
-        if (date == null) {
-            jsonWriter.nullValue();
+    public JsonElement serialize(Date o, Type type, JsonSerializationContext jsonSerializationContext) {
+        Object value;
+        if (serializerDatePattern == null) {
+            value = o.getTime();
         } else {
-            if (StringUtils.isNullOrEmpty(serializerDatePattern)) {
-                jsonWriter.value(date.getTime());
-            } else {
-                String dateFormatAsString = DateUtils.dateToString(date, serializerDatePattern);
-                jsonWriter.value(dateFormatAsString);
-            }
+            value = DateUtils.dateToString(o, serializerDatePattern);
         }
+        return jsonSerializationContext.serialize(value);
     }
 
     @Override
-    public Date read(JsonReader jsonReader) throws IOException {
-        String datetime = jsonReader.nextString();
+    public Date deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+        String datetime = jsonElement.getAsString();
         if (StringUtils.isNumber(datetime)) {
             if (datetime.length() == 10) {
                 return new Date(Long.parseLong(datetime) * 1000);

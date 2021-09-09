@@ -18,7 +18,7 @@ public class GsonParserFactory extends AbstractJsonParserFactory<GsonParser> {
     @Override
     protected GsonParser newJsonParser(SerializeConfig config) {
         GsonBuilder gsonBuilder = new GsonBuilder()
-                .registerTypeAdapter(Date.class, new DateTypeAdapter(null))
+                .registerTypeAdapter(Date.class, new DateTypeAdapter(config.getDateFormat()))
                 .registerTypeAdapter(Double.class, new DoubleTypeAdapter())
                 .registerTypeAdapter(String.class, new StringTypeAdapter())
                 .addDeserializationExclusionStrategy(new GsonExclusionStrategy());

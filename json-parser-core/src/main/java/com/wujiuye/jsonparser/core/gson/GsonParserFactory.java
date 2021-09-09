@@ -20,7 +20,7 @@ public class GsonParserFactory extends AbstractJsonParserFactory<GsonParser> {
     @Override
     protected GsonParser newJsonParser(SerializeConfig config) {
         GsonBuilder gsonBuilder = new GsonBuilder()
-                .registerTypeAdapter(Date.class, new DateTypeAdapter(null))
+                .registerTypeAdapter(Date.class, new DateTypeAdapter(config.getDateFormat()))
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter(config.getTimezone(),
                         config.getLocalDateTimeFormat()))
                 .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter(config.getTimezone(),

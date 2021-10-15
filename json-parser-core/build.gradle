@@ -7,14 +7,11 @@ plugins {
 }
 
 group = 'com.github.wujiuye'
-version = '2.0.3.RELEASE'
+version = '2.0.4.RELEASE'
 
 dependencies {
     compileOnly('com.google.code.gson:gson:2.8.6')
     compileOnly('com.fasterxml.jackson.core:jackson-databind:2.9.6')
-
-    compile('org.openjdk.jmh:jmh-core:1.23')
-    compile('org.openjdk.jmh:jmh-generator-annprocess:1.23')
 
     annotationProcessor 'org.projectlombok:lombok:1.18.2'
     compileOnly 'org.projectlombok:lombok:1.18.2'
@@ -24,6 +21,9 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile('com.google.code.gson:gson:2.8.6')
     testCompile('com.fasterxml.jackson.core:jackson-databind:2.9.6')
+
+    testCompile('org.openjdk.jmh:jmh-core:1.23')
+    testCompile('org.openjdk.jmh:jmh-generator-annprocess:1.23')
 }
 
 // 打包源码

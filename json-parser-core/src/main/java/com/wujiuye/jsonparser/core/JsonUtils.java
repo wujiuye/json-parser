@@ -1,6 +1,7 @@
 package com.wujiuye.jsonparser.core;
 
 import com.wujiuye.jsonparser.core.gson.GsonParserFactory;
+import com.wujiuye.jsonparser.core.gson1x.Gson1xParserFactory;
 import com.wujiuye.jsonparser.core.jackson.JacksonParserFactory;
 import com.wujiuye.jsonparser.core.util.StringUtils;
 
@@ -17,22 +18,22 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 public class JsonUtils {
 
-    private static AtomicReference<AbstractJsonParserFactory<? extends JsonParser>> chooseJsonParserFactory
+    private static AtomicReference<AbstractJsonParserFactory> chooseJsonParserFactory
             = new AtomicReference<>(newJsonParserFactory(new SerializeConfig()));
 
-    private static AbstractJsonParserFactory<? extends JsonParser> newJsonParserFactory(SerializeConfig config) {
+    private static AbstractJsonParserFactory newJsonParserFactory(SerializeConfig config) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        try {
-            classLoader.loadClass("com.google.gson.Gson");
-            return new GsonParserFactory(config);
-        } catch (ClassNotFoundException e) {
-            try {
-                classLoader.loadClass("com.fasterxml.jackson.databind.ObjectMapper");
-                return new JacksonParserFactory(config);
-            } catch (ClassNotFoundException ex) {
-                throw new RuntimeException("未找到任何json包，请先在当前项目的依赖配置文件中加入 gson或fackson");
+        if (CheckerUtils.isUseJackson(classLoader)) {
+            return new JacksonParserFactory(config);
+        }
+        if (CheckerUtils.isUseGson(classLoader)) {
+            if (CheckerUtils.getGsonVersion(classLoader) == 2) {
+                return new GsonParserFactory(config);
+            } else {
+                return new Gson1xParserFactory(config);
             }
         }
+        throw new RuntimeException("未找到任何json包，请先在当前项目的依赖配置文件中加入 gson或fackson");
     }
 
     public static synchronized void resetSerializeConfig(SerializeConfig config) {
